@@ -1,16 +1,21 @@
 hours = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5]
 
+//when page is ready add date and rows
 $(document).ready(function() {
     setDate();
     renderRows();
 })
 
+// Get date from moment.js to add to top of page
 function setDate(){
     date = moment().format('MMMM Do YYYY, h:mm a')
-    console.log(date)
+
+    //add date to jumbotron
+    $("#currentDay").text(date)
 
 }
 
+// empty the container and start creating rows for each array item
 function renderRows() {
 
     //Start with an empty container
@@ -28,6 +33,7 @@ function renderRows() {
 
 }
 
+//for each hour in the array create a row with 3 columns
 function createRow() {
     //create row
     var row = $("<div>").attr("class", "row")
@@ -35,9 +41,10 @@ function createRow() {
     //create column 1 containing time
     var colOne = $("<div>").attr({
         class: "row col-md-1 hour",
-        "data-time": hour});
+        id: hour});
     
-    //create time text for column 1
+    
+    //create time text for column 1 adding AM or PM where applicable
 
     if (hour<9){
         time = $("<P>").text(hour + "PM")
