@@ -1,18 +1,11 @@
 hours = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17"]
 
+setDate();
 
-
-//when page is ready add date and rows
-$(document).ready(function() {
-    setDate();
-    renderRows();
-    $("button").on("click", saveText);
-    setInterval(function(){
-        rowStyle();
-    },1000);
+renderRows();
     
-})
-
+$("button").on("click", saveText);
+ 
 // Get date from moment.js to add to top of page
 function setDate(){
     date = moment().format('MMMM Do YYYY, h:mm a')
@@ -127,6 +120,11 @@ function rowStyle() {
     })
     
 }
+
+setInterval(function(){
+    rowStyle();
+},1000);
+    
 // run the saveText function when save button clicked
 $("button").on("click", saveText);
 
