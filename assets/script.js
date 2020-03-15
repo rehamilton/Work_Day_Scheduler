@@ -8,7 +8,7 @@ $("button").on("click", saveText);
  
 // Get date from moment.js to add to top of page
 function setDate(){
-    var date = moment().format('MMMM Do YYYY, h:mm a');
+    var date = moment().format('dddd MMMM D, YYYY');
 
     //add date to jumbotron
     $("#currentDay").text(date);
