@@ -1,4 +1,4 @@
-hours = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5]
+hours = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17"]
 
 //when page is ready add date and rows
 $(document).ready(function() {
@@ -11,7 +11,7 @@ function setDate(){
     date = moment().format('MMMM Do YYYY, h:mm a')
 
     //add date to jumbotron
-    $("#currentDay").text(date)
+    $("#currentDay").text(date);
 
 }
 
@@ -28,7 +28,8 @@ function renderRows() {
         hour = hours[i]
 
         //run the createRow function using the current index
-        createRow(hour)
+        createRow(hour);
+        rowStyle(hour);
     }
 
 }
@@ -39,21 +40,21 @@ function createRow() {
     var row = $("<div>").attr("class", "row")
     
     //create column 1 containing time
-    var colOne = $("<div>").attr({
-        class: "row col-md-1 hour",
-        id: hour});
+    var colOne = $("<div>").attr("class", "row col-md-1 col-sm-1 hour");
     
     
+    console.log("type: " +typeof hour);
     //create time text for column 1 adding AM or PM where applicable
 
-    if (hour<9){
+    if (hour==12){
         time = $("<P>").text(hour + "PM")
     }
-    else if (hour===12){
-        time = $("<P>").text(hour + "PM")
-    }
-    else{
+    else if (hour<12){
         time = $("<P>").text(hour + "AM")
+    }
+    else if (hour>12){
+        newHour = hour-12
+        time = $("<P>").text(newHour + "PM")
     }
 
     //add time to colOne
@@ -61,12 +62,13 @@ function createRow() {
 
     //create column 2 which is an input field for schedule information
     var colTwo = $("<input>").attr({
-        class: "row col-md-10",
-        type: "text"})
+        class: "row col-md-10 col-sm-10",
+        type: "text",
+        id: hour})
 
     //create column 3 which is a save button
     var colThree = $("<button>").attr({
-        class: "row col-md-1 saveBtn fas fa-lock",
+        class: "row col-md-1 col-sm-1 saveBtn fas fa-lock",
         "data-save": hour})
 
     // add the 3 columns to the row
@@ -75,4 +77,34 @@ function createRow() {
     //add the row to the container
     $(".container").append(row)
 }
+
+function rowStyle() {
+    
+    $("input").each(function(){
+        var rowHour = parseInt((this).id)
+        console.log("test: " +typeof rowHour);
+        var actualHour = parseInt(moment().hours())
+        console.log("actualHour: " +typeof actualHour);
+        
+
+        if (actualHour===rowHour){
+            $(this).addClass("present")
+        }
+
+        else if (actualHour>rowHour) {
+            $(this).addClass("past")
+        }
+
+        else{
+            $(this).addClass("future")
+        }     
+        
+    })
+    
+}
+
+setInterval(function(){
+    rowStyle();
+},1000);
+
 
