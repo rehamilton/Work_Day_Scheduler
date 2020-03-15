@@ -1,4 +1,4 @@
-hours = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17"]
+hours = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"]
 
 setDate();
 
@@ -8,7 +8,7 @@ $("button").on("click", saveText);
  
 // Get date from moment.js to add to top of page
 function setDate(){
-    date = moment().format('MMMM Do YYYY, h:mm a')
+    var date = moment().format('MMMM Do YYYY, h:mm a');
 
     //add date to jumbotron
     $("#currentDay").text(date);
@@ -57,49 +57,51 @@ function createRow() {
     }
 
     //add time to colOne
-    colOne.append(time)
+    colOne.append(time);
 
-    //create column 2 which is an input field for schedule information
-    var colTwo = $("<input>").attr({
+    //create column 2 which is a textarea field for schedule information (as indicated in css)
+    var colTwo = $("<textarea>").attr({
         class: "row col-md-10 col-sm-10",
         type: "text",
-        id: hour})
+        id: hour});
     
     // get a value from local storage using the hour index as the key
     var eventId = localStorage.getItem(hour)
 
 
-    //if there is an event make it the value of the column 2 input
+    //if there is an event make it the value of the column 2 textarea
     if (eventId) {
 
-       colTwo.val(eventId)
+       colTwo.val(eventId);
         
     }
 
     //create column 3 which is a save button
-    var colThree = $("<button>").attr({
-        class: "row col-md-1 col-sm-1 saveBtn fas fa-lock",
-        "data-save": hour})
+    var colThree = $("<button>").attr("class", "row col-md-1 col-sm-1 saveBtn");
+
+    var icon = $("<i>").attr("class", "far fa-save fa-2x");
+
+    colThree.append(icon);
 
     // add the 3 columns to the row
-    row.append(colOne, colTwo, colThree)
+    row.append(colOne, colTwo, colThree);
 
     //add the row to the container
-    $(".container").append(row)
+    $(".container").append(row);
 
 }
 
 //style each row to show whether the hour sits in the past, present or future
 function rowStyle() {
     
-    //take each input row and start a function
-    $("input").each(function(){
+    //take each text area and start a function
+    $("textarea").each(function(){
 
-        //take the id from the input which contains the hour value and turn into an integer
-        var rowHour = parseInt((this).id)
+        //take the id from the text area which contains the hour value and turn into an integer
+        var rowHour = parseInt((this).id);
         
         //retriev the current hour in 24 hour format from moment.js and turn into an integer
-        var actualHour = parseInt(moment().hours())
+        var actualHour = parseInt(moment().hours());
         
         
         //if the hour in the row ID is the same as the time from moment.js then style the row for the present
@@ -130,17 +132,11 @@ $("button").on("click", saveText);
 
 
 function saveText(event) {
-    //get the input div which is always the second child (index 1) of the parent as per rowStyle above. Take the id which is the hour.
+    //get the text area which is always the second child (index 1) of the parent as per rowStyle above. Take the id which is the hour.
     var eventId = $(this).parent().children()[1].id;
-    //Do the same as above to get the value (text input) of the input field
+    //Do the same as above to get the value (text input) of the textarea field
     var eventText = $(this).parent().children()[1].value;
 
-    //If there is no text in the field send an alert and return out of function
-    if (eventText === "") {
-    alert("Nothing has been entered");
-    return
-    }
-    
     //take the hour and text as retrieved above and send to local storage
     window.localStorage.setItem(eventId, eventText)
 
