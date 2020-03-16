@@ -40,7 +40,7 @@ Below is a flowdiagram of the overall process.
 
 ## Format Page
 
-A welcome screen describing the quiz and the consequences of a wrong answer. Contains a start quiz button that, once clicked, moves you to the questions screen.
+The following code creates a row and content for each value in the array and styles it accordingly.
 
 ![markdownAssets/Format.png](https://github.com/rehamilton/Work_Day_Scheduler/blob/master/markdownAssets/Format.PNG "Format")
 
