@@ -1,11 +1,9 @@
-hours = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"]
+hours = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17"]
 
 setDate();
 
 renderRows();
     
-$("button").on("click", saveText);
- 
 // Get date from moment.js to add to top of page
 function setDate(){
     var date = moment().format('dddd MMMM D, YYYY');
@@ -29,8 +27,8 @@ function renderRows() {
         index = i
 
         //run the createRow function using the current index
-        createRow(hour);
-        rowStyle(hour);
+        createRow(hour);  
+        rowStyle(hour); 
         
     }
 
@@ -106,20 +104,30 @@ function rowStyle() {
         
         //if the hour in the row ID is the same as the time from moment.js then style the row for the present
         if (actualHour===rowHour){
-            $(this).addClass("present")
+            $(this).addClass("present");
+            $(this).removeClass("past");
+            $(this).removeClass("future");
         }
 
         //if the hour in the row ID is more than the time from moment.js then style the row for the past
         else if (actualHour>rowHour) {
-            $(this).addClass("past")
+            $(this).addClass("past");
+            $(this).removeClass("present");
+            $(this).removeClass("future");
         }
 
         //All other instances will be in the futire so style as future
         else{
-            $(this).addClass("future")
+            $(this).addClass("future");
+            $(this).removeClass("present");
+            $(this).removeClass("past");
         }     
+
+        
         
     })
+
+    console.log("interval");
     
 }
 
@@ -128,8 +136,7 @@ setInterval(function(){
 },1000);
     
 // run the saveText function when save button clicked
-$("button").on("click", saveText);
-
+$("button").on("click", saveText); 
 
 function saveText(event) {
     //get the text area which is always the second child (index 1) of the parent as per rowStyle above. Take the id which is the hour.
