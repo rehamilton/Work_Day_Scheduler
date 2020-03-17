@@ -75,7 +75,9 @@ function createRow() {
     }
 
     //create column 3 which is a save button
-    var colThree = $("<button>").attr("class", "row col-md-1 col-sm-1 saveBtn");
+    var colThree = $("<button>").attr({
+        class: "row col-md-1 col-sm-1 saveBtn",
+        "data-hour": hour});
 
     var icon = $("<i>").attr("class", "far fa-save fa-2x");
 
@@ -140,11 +142,11 @@ $("button").on("click", saveText);
 
 function saveText(event) {
     //get the text area which is always the second child (index 1) of the parent as per rowStyle above. Take the id which is the hour.
-    var eventId = $(this).parent().children()[1].id;
+    var eventId = $(this).attr("data-hour");
     //Do the same as above to get the value (text input) of the textarea field
-    var eventText = $(this).parent().children()[1].value;
+    var eventText = $(this).siblings("textarea").val()
 
     //take the hour and text as retrieved above and send to local storage
-    window.localStorage.setItem(eventId, eventText)
-
+    window.localStorage.setItem(eventId, eventText);
+    
 }
